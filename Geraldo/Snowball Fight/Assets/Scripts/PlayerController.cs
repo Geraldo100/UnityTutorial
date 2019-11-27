@@ -20,10 +20,17 @@ public class PlayerController : MonoBehaviour
 
     public bool isGrounded;
 
+    private Animator anim;
+
+    public GameObject snowBall;
+    public Transform throwPoint;
+
     // Start is called before the first frame update
     void Start()
     {
         theRB = GetComponent<Rigidbody2D>();
+
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -44,9 +51,30 @@ public class PlayerController : MonoBehaviour
             theRB.velocity = new Vector2(0, theRB.velocity.y);
         }
 
-        if (Input.GetKey(jump) && isGrounded)
+        if (Input.GetKeyDown(jump) && isGrounded)
         {
             theRB.velocity = new Vector2(theRB.velocity.x, jumpForce);
         }
+
+        if (Input.GetKeyDown(throwSnowBall))
+        {
+            GameObject ballClone = (GameObject)Instantiate(snowBall, throwPoint.position, throwPoint.rotation);
+
+            ballClone.transform.localScale = transform.localScale;
+
+            anim.SetTrigger("Throw");
+        }
+
+        if (theRB.velocity.x < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else if (theRB.velocity.x > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+
+        anim.SetFloat("Speed", Mathf.Abs(theRB.velocity.x));
+        anim.SetBool("Grounded", isGrounded);
     }
 }
