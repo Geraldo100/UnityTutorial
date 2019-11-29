@@ -1,4 +1,2 @@
 # UnityTutorial
 Learning Unity.
-
-Testare.
