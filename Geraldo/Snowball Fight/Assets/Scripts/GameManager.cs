@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class GameManager : MonoBehaviour
     public GameObject[] p2Sticks;
 
     public AudioSource hurtSound;
+
+    public string mainMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +40,16 @@ public class GameManager : MonoBehaviour
         {
             player2.SetActive(false);
             p1Wins.SetActive(true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(mainMenu);
         }
     }
 
